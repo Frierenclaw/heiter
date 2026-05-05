@@ -8,7 +8,7 @@ class RedisClient:
     async def put_token(token: str,
                         user_id: UUID,
                         alive_seconds: int): # secrets.token_urlsafe
-        result = await redis_client.set(key=f'token:{token}',
+        result = await redis_client.set(name=f'token:{token}',
                                value=str(user_id),
                                ex=alive_seconds)
         

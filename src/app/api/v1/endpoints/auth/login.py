@@ -1,14 +1,17 @@
-from fastapi import APIRouter, HTTPException, status
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 from loguru import logger
 
 from api.v1.auth_logic import Auth
-from api.v1.endpoints.auth.schemas import LoginRequestDTO, LoginResponseDTO
+from api.v1.endpoints.auth.schemas import LoginResponseDTO
 from models.user import User
 
 router = APIRouter()
 
 @router.post('/login', response_model=LoginResponseDTO)
-async def login_endpoint(user_dto: LoginRequestDTO):
+async def login_endpoint(user_dto: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = await User.get_or_none(username=user_dto.username)
 
     if user is None:

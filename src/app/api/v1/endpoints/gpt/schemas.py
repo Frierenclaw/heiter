@@ -1,8 +1,10 @@
+from typing import Literal
+
 from pydantic import BaseModel
 
 
 class MessageDTO(BaseModel):
-    role: str
+    role: Literal['user', 'system', 'assistant']
     content: str
 
 class CreateCompletionRequestDTO(BaseModel):

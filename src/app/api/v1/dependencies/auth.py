@@ -6,9 +6,9 @@ from fastapi.security import OAuth2PasswordBearer
 from models.user import User
 from redis_db import RedisClient
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/api/v1/auth/login')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/v1/auth/login')
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme())]):
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     user_id = await RedisClient.check_token(token=token)
 
     if user_id is None:
