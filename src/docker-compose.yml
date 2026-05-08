@@ -1,0 +1,46 @@
+services:
+  heiter:
+    build:
+      dockerfile: Dockerfile
+      context: ./app
+
+    env_file:
+      - .env
+
+    ports:
+      - "8080:80"
+    networks:
+      - backend_network
+
+    restart: unless-stopped
+
+  redis:
+    image: redis:8.6-alpine
+
+    volumes:
+      - redis_data:/data
+
+    networks:
+      - backend_network
+
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:18.1 # Specifies the PostgreSQL image and version
+    env_file:
+      - .env
+
+    networks:
+      - backend_network
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/pgdata # Mounts a local directory for persistent data storage
+    restart: unless-stopped # Ensures the container restarts automatically if it stop/home/neadond/smokey/master_node/docker-compose.yml
+
+networks:
+  backend_network:
+    driver: bridge
+
+volumes:
+  redis_data:
+  postgres_data:

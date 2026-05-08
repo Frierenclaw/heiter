@@ -2,6 +2,7 @@ from uuid import UUID
 
 from core.config import redis_client
 
+import json
 
 class RedisClient:
     @staticmethod
@@ -21,3 +22,25 @@ class RedisClient:
         )
 
         return token_value
+    
+    @staticmethod
+    async def get_context(user_id: str):
+        context = await redis_client.lrange(
+            name=f'context:{user_id}',
+            start=0,
+            end=-1
+        )
+        serialized_messages = [json.loads(message) for message in context]
+
+        return serialized_messages
+    
+    @staticmethod
+    async def put_in_context(user_id: str,
+                             messages: list[dict]):
+        messages = [json.dumps(message) for message in messages]
+
+        context = await redis_client.lpush(
+            f'context:{user_id}',
+            *messages
+        )
+    

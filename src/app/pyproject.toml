@@ -15,6 +15,7 @@ dependencies = [
     "pydantic-settings>=2.14.0",
     "redis>=7.4.0",
     "ruff>=0.15.12",
+    "slowapi>=0.1.9",
     "tortoise-orm>=1.1.7",
 ]
 

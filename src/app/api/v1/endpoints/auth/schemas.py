@@ -1,11 +1,11 @@
 from pydantic import BaseModel
 
 
-class LoginRequestDTO(BaseModel):
-    grant_type: str
-    
+class LoginResponseDTO(BaseModel):
+    access_token: str
+
+class RegisterRequestDTO(BaseModel):
     username: str
     password: str
 
-class LoginResponseDTO(BaseModel):
-    access_token: str
+    # ! TODO: добавить EmailStr
