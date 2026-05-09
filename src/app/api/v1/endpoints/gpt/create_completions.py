@@ -7,7 +7,7 @@ from openai.types.chat.chat_completion import ChatCompletion
 
 from api.v1.dependencies.auth import get_current_user
 from api.v1.endpoints.gpt.schemas import CreateCompletionRequestDTO
-from core.config import async_openai_client
+from core.clients import async_openai_client
 from models.user import User
 from redis_db import RedisClient
 

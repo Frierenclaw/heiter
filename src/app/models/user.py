@@ -7,4 +7,4 @@ class User(models.Model):
     username = fields.CharField(max_length=256, unique=True)
     password = fields.BinaryField() # bcrypt password
 
-    
+    email = fields.CharField(max_length=256, unique=True)

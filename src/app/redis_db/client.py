@@ -1,8 +1,8 @@
+import json
 from uuid import UUID
 
-from core.config import redis_client
+from core.clients import redis_client
 
-import json
 
 class RedisClient:
     @staticmethod

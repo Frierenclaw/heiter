@@ -1,7 +1,5 @@
 from fastapi import FastAPI
-from openai import AsyncClient
 from pydantic_settings import BaseSettings
-from redis.asyncio import Redis
 
 
 class Config(BaseSettings):
@@ -35,8 +33,3 @@ TORTOISE_ORM = {
 }
 
 app = FastAPI()
-redis_client = Redis(host=config.REDIS_HOST,
-                     port=config.REDIS_PORT,
-                     decode_responses=True)
-async_openai_client = AsyncClient(api_key=config.OPENAI_API_KEY,
-                                  base_url=config.OPENAI_BASE_URL)
