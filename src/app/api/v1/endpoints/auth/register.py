@@ -32,7 +32,8 @@ async def register_account(dto: RegisterRequestDTO):
     try:
         user = await User.create(
             username=dto.username,
-            password=hashed_password)
+            password=hashed_password,
+            email=dto.email)
         
         try:
             token = Auth.generate_token()

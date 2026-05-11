@@ -6,7 +6,7 @@ from httpx import AsyncClient
 from openai import AsyncOpenAI
 from redis.asyncio import Redis
 
-from core.clients import config
+from core.config import config
 
 steos_voice_client = AsyncClient()
 async_openai_client = AsyncOpenAI(api_key=config.OPENAI_API_KEY,

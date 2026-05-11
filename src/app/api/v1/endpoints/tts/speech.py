@@ -1,8 +1,10 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Response
+from fastapi.responses import StreamingResponse
 
 from api.v1.dependencies.auth import get_current_user
+from api.v1.edgetts import EdgeTTS
 from api.v1.endpoints.tts.schemas import TTSApiSpeechRequestDTO
 from api.v1.steosvoice import SteosVoice
 from core.config import config
@@ -25,13 +27,22 @@ async def speech_endpoint(
     Returns:
         Response: The synthesized audio as an MP3 response.
     """
-    audio_bytes = await SteosVoice.synthesis_by_text(
-        input_text=dto.input,
-        speed=dto.speed,
-        steos_token=config.STEOS_TOKEN
-    )
 
-    return Response(
-        content=audio_bytes, 
-        media_type="audio/mpeg" 
-    )
+    async def generate_audio():
+        if dto.model == 'edge_tts':
+            audio_source = await EdgeTTS.synthesis_by_text(input_text=dto.input, voice=dto.voice)
+        elif dto.model == 'steosvoice':
+            audio_source = await SteosVoice.synthesis_by_text(
+                input_text=dto.input, 
+                speed=dto.speed, 
+                steos_token=config.STEOS_TOKEN
+            )
+        
+        async for chunk in audio_source.stream():
+            if isinstance(chunk, dict) and chunk.get("type") == "audio":
+                yield chunk["data"]
+            elif isinstance(chunk, bytes):
+                yield chunk
+
+    # Возвращаем специальный объект ответа
+    return StreamingResponse(generate_audio(), media_type='audio/mpeg')

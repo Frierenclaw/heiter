@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class LoginResponseDTO(BaseModel):
@@ -8,4 +8,4 @@ class RegisterRequestDTO(BaseModel):
     username: str
     password: str
 
-    # ! TODO: добавить EmailStr
+    email: EmailStr
