@@ -17,6 +17,25 @@ chat_completions_router = APIRouter()
 @chat_completions_router.post('/chat/completions', response_model=ChatCompletion)
 async def create_chat_completions(dto: CreateCompletionRequestDTO,
                                   user: Annotated[User, Depends(get_current_user)]):
+    """
+    Create chat completions using OpenAI's API.
+
+    This endpoint allows authenticated users to generate chat completions. It supports optional use of previous conversation context stored in Redis.
+
+    Args:
+        dto (CreateCompletionRequestDTO): The request data containing messages, model, max_tokens, temperature, and use_previous_context flag.
+        user (Annotated[User, Depends(get_current_user)]): The authenticated user making the request.
+
+    Raises:
+        HTTPException: Raised with 429 status if rate limit is exceeded.
+        HTTPException: Raised with 504 status if the request times out.
+        HTTPException: Raised with 500 status for OpenAI errors.
+        HTTPException: Raised with 500 status for unexpected errors.
+
+    Returns:
+        ChatCompletion: The response from OpenAI's chat completions API.
+    """
+    
     new_messages = [{'role': message.role, 'content': message.content} for message in dto.messages]
     request_messages = []
 

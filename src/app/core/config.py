@@ -11,7 +11,10 @@ class Config(BaseSettings):
     REDIS_PORT: int
 
     ACCESS_TOKEN_TTL: int = 16500
-    
+
+    STEOS_TOKEN: str | None = None
+
+
 config = Config()
 
 TORTOISE_ORM = {

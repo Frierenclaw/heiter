@@ -9,6 +9,18 @@ router = APIRouter()
 
 @router.post('/register')
 async def register_account(dto: RegisterRequestDTO):
+    """Register a new user and return an authentication token.
+
+    Args:
+        dto (RegisterRequestDTO): User registration data containing username and password.
+
+    Raises:
+        HTTPException: If password hashing or user creation fails.
+
+    Returns:
+        dict: A response object with 'created' status and optional 'token'.
+    """
+    
     try:
         hashed_password = Auth.hash_password(dto.password)
     except Exception as e:
@@ -22,7 +34,20 @@ async def register_account(dto: RegisterRequestDTO):
             username=dto.username,
             password=hashed_password)
         
-        return {'created': True}
+        try:
+            token = Auth.generate_token()
+            await Auth.whitelist_token(token,
+                                       user.id)
+            
+            return {
+                'created': True,
+                'token': token
+            }
+        except Exception as e:
+            logger.error(f'Error while generating token for user id={user.id}. Error: {e}')
+            
+            return {'created': True,
+                    'token': None}
     except Exception as e:
         logger.error(f'Unexcepted error for new user {dto.username}. Detail: {e} ')
 
