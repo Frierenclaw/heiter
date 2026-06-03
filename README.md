@@ -13,13 +13,14 @@
 
 ## 📐 Architecture Integration
 
-[ fern (Pipeline) ]  ---> (Text/Audio Requests) ---> [  FastAPI Router  ]
-         ^                                                 │
-         │ (OpenAI Chunks, STT Text, TTS Audio)            v
-  [ Worker Pool ] <═╦══════════════════════════════════════╝
-                    ╠═► LLM Engine (OpenAI API Compatible)
-                    ╠═► Sber STT Engine
-                    ╚═► Edge TTS Engine
+## 🔮 Core Specifications
+
+| Component / Layer | Magic Spell (Tech Stack) | Responsibility & Integration |
+| :--- | :--- | :--- |
+| **The Grimoire (LLM Layer)** | FastAPI + OpenAI API | Exposes a fully OpenAI-compatible API (/v1/chat/completions) to serve the underlying language model text generation seamlessly. |
+| **The Scribe (STT)** | Sber STT (LOCAL!) | Integrates high-accuracy local Speech-to-Text capabilities to instantly process incoming user speech chunks with minimal latency. |
+| **The Voice (TTS)** | edge-tts | Provides lightweight, natural, and low-latency Text-to-Speech generation, keeping the server independent from heavy paid cloud APIs. |
+| **The Overseer (Async Core)** | Python 3.14 + asyncio | Powered by native asyncio and optimized background workers to handle multiple concurrent sessions without blocking text/audio generation. |
 
 ## 🛠 Tech Stack & Spells
 
@@ -32,17 +33,21 @@
 ## 🚀 Quick Start
 
 1. **Clone the grimoire:**
+```
    git clone https://github.com/Frierenclaw/heiter.git
    cd heiter
+```
 
 2. **Prepare the ingredients:**
     Install docker
 
 3. **Configure your secrets:**
-   Create a `.env` file with your Sber STT credentials and model path configurations.
+   Create a `.env` 
 
 4. **Cast the spell:**
+```
    docker compose up --build
+```
 
 ---
 *Part of the [Frieren AI Ecosystem](https://github.com/Frierenclaw).*
