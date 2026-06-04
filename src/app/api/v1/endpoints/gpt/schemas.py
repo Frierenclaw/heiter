@@ -15,3 +15,5 @@ class CreateCompletionRequestDTO(BaseModel):
     temperature: float = 1.0
     
     use_previous_context: bool = True
+
+    stream: bool = True
