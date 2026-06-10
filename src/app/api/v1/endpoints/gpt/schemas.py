@@ -13,7 +13,5 @@ class CreateCompletionRequestDTO(BaseModel):
 
     max_tokens: int | None = None
     temperature: float = 1.0
-    
-    use_previous_context: bool = True
 
     stream: bool = True

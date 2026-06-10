@@ -7,6 +7,9 @@ services:
     env_file:
       - .env
 
+    volumes:
+      - ./app:/app  
+      
     ports:
       - "8080:80"
     networks:
@@ -26,7 +29,7 @@ services:
     restart: unless-stopped
 
   postgres:
-    image: postgres:18.1 # Specifies the PostgreSQL image and version
+    image: postgres:18.1 
     env_file:
       - .env
 
@@ -34,8 +37,8 @@ services:
       - backend_network
 
     volumes:
-      - postgres_data:/var/lib/postgresql/pgdata # Mounts a local directory for persistent data storage
-    restart: unless-stopped # Ensures the container restarts automatically if it stop/home/neadond/smokey/master_node/docker-compose.yml
+      - postgres_data:/var/lib/postgresql/pgdata 
+    restart: unless-stopped 
 
 networks:
   backend_network:

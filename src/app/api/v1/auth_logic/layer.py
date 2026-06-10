@@ -3,21 +3,14 @@ from uuid import UUID
 
 import bcrypt
 
-from core.config import config
 from redis_db import RedisClient
 
 
 class Auth:
-    """
-    TODO: добавить доку
-    """
-    
+
     @staticmethod
     def hash_password(password: str,
                       salt_rounds: int = 12) -> bytes:
-        """
-        TODO: добавить доку
-        """
         
         salt = bcrypt.gensalt(rounds=salt_rounds)
         hashed_password = bcrypt.hashpw(password=password.encode('utf-8'),
@@ -43,10 +36,8 @@ class Auth:
     
     @staticmethod
     async def whitelist_token(token: str,
-                              user_id: UUID,
-                              alive_seconds: int = config.ACCESS_TOKEN_TTL):
+                              user_id: UUID):
         status = await RedisClient.put_token(token=token,
-                                    user_id=user_id,
-                                    alive_seconds=alive_seconds)
+                                    user_id=user_id)
         
         return status
