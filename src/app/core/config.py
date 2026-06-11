@@ -32,5 +32,3 @@ TORTOISE_ORM = {
         }
     }
 }
-
-app = FastAPI()
