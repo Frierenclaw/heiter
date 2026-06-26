@@ -2,12 +2,11 @@
 
 > *"The wise memory keeper. A repository of knowledge and character."*
 
-**Heiter** is the intelligence layer and the "brain" of the Frieren AI Ecosystem. It acts as a high-throughput, asynchronous inference server that manages language model context, character personality, and provides OpenAI-compatible streaming endpoints for the pipeline.
+**Heiter** is the intelligence layer and the "brain" of the Frieren AI Ecosystem. It acts as a high-throughput, asynchronous inference server that provides OpenAI-compatible streaming endpoints for the pipeline.
 
 ## 🔮 Responsibilities
 
 * **The Grimoire (LLM Layer):** Exposes a fully OpenAI-compatible API (`/v1/chat/completions`) to serve the underlying language model text generation seamlessly.
-* **The Scribe (Sber STT):** Integrates high-accuracy Speech-to-Text capabilities via sberr tts (local!) to instantly process user speech chunks.
 * **The Voice (Edge TTS):** Provides lightweight, natural, and low-latency Text-to-Speech generation powered by Edge TTS, keeping the server independent from heavy paid API dependencies.
 * **The Overseer (Async & Workers):** Built on native `asyncio` and optimized with background workers to handle multiple concurrent sessions without blocking text/audio generation.
 
@@ -18,7 +17,6 @@
 | Component / Layer | Magic Spell (Tech Stack) | Responsibility & Integration |
 | :--- | :--- | :--- |
 | **The Grimoire (LLM Layer)** | FastAPI + OpenAI API | Exposes a fully OpenAI-compatible API (/v1/chat/completions) to serve the underlying language model text generation seamlessly. |
-| **The Scribe (STT)** | Sber STT (LOCAL!) | Integrates high-accuracy local Speech-to-Text capabilities to instantly process incoming user speech chunks with minimal latency. |
 | **The Voice (TTS)** | edge-tts | Provides lightweight, natural, and low-latency Text-to-Speech generation, keeping the server independent from heavy paid cloud APIs. |
 | **The Overseer (Async Core)** | Python 3.14 + asyncio | Powered by native asyncio and optimized background workers to handle multiple concurrent sessions without blocking text/audio generation. |
 
@@ -27,7 +25,6 @@
 * **Core Server:** Python 3.14 (Driven by `asyncio` & `Uvicorn`)
 * **API Framework:** `FastAPI`
 * **Speech Synthesis:** `edge-tts`
-* **Speech Recognition:** Sber STT Integration (LOCAL!)
 * **HTTP Client:** `httpx`
 
 ## 🚀 Quick Start
